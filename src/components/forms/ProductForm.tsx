@@ -5,7 +5,6 @@ import { Product } from "@/types/product"
 import { z } from "zod"
 import { Form, FormField } from "../ui/form"
 import { Input } from "../ui/input"
-import { Button } from "../ui/button"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
@@ -13,7 +12,7 @@ import { useEffect } from "react"
 interface Props {
     type: "create" | "edit"
     handleSubmit: (data: z.infer<typeof productFormSchema>) => void
-    productToEdit?: Product 
+    productToEdit?: Product
 }
 
 export const ProductForm = ({ type, handleSubmit, productToEdit }: Props) => {
@@ -39,7 +38,7 @@ export const ProductForm = ({ type, handleSubmit, productToEdit }: Props) => {
     if (type === "create") {
         return (
             <Form {...productForm}>
-                <form onSubmit={productForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
+                <form id="product-form" onSubmit={productForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
                     <FormField control={productForm.control} name="name" render={({ field }) => (
                         <>
                             <Input {...field} className={`bg-white w-full px-4 py-2 rounded-lg shadow-md text-gray-500 ${productForm.formState.errors.name ? 'border-red-500' : ''}`} placeholder="Name" />
@@ -64,9 +63,6 @@ export const ProductForm = ({ type, handleSubmit, productToEdit }: Props) => {
                             )}
                         </>
                     )} />
-                    <Button className="w-full mb-4 px-4 py-2 rounded-lg shadow-md">
-                        Create
-                    </Button>
                 </form>
             </Form>
         )
@@ -74,7 +70,7 @@ export const ProductForm = ({ type, handleSubmit, productToEdit }: Props) => {
     else {
         return (
             <Form {...productForm}>
-                <form onSubmit={productForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
+                <form id="edit-product-form" onSubmit={productForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
                     <FormField control={productForm.control} name="name" render={({ field }) => (
                         <>
                             <Input {...field} className={`bg-white w-full px-4 py-2 rounded-lg shadow-md text-gray-500 ${productForm.formState.errors.name ? 'border-red-500' : ''}`} placeholder="Name" />
@@ -99,9 +95,6 @@ export const ProductForm = ({ type, handleSubmit, productToEdit }: Props) => {
                             )}
                         </>
                     )} />
-                    <Button className="w-full mb-4 px-4 py-2 rounded-lg shadow-md">
-                        Save
-                    </Button>
                 </form>
             </Form>
         )

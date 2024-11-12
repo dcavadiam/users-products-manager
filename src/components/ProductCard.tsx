@@ -1,19 +1,18 @@
 'use client';
 
-import { EditButton } from "./EditButton";
 import { DeleteButton } from "./DeleteButton";
 import { Card } from "./ui/card"
 
 import { Product } from "@/types/product";
 import { useProduct } from "@/context/product";
-import Link from "next/link";
+import { EditProductDialog } from "@/containers/editProductDialog";
 
 export const ProductCard = ({ product }: { product: Product }) => {
     const { id, name, price, stock } = product;
     const { products, setProducts } = useProduct();
 
     const handleDeleteProduct = (productId: string) => {
-        const updatedProducts = products.filter(({id}) => id !== productId);
+        const updatedProducts = products.filter(({ id }) => id !== productId);
         setProducts(updatedProducts);
         localStorage.setItem("products", JSON.stringify(updatedProducts));
     }
@@ -29,9 +28,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
                 <span className="text-3xl font-semibold ">${price}</span>
                 <span className="text-sm text-gray-500 mb-2">Stock: {stock}</span>
                 <div className="flex items-center gap-2 ">
-                    <Link href={`/edit/product/${id}`}>
-                        <EditButton />
-                    </Link>
+                    <EditProductDialog id={id} />
                     <DeleteButton onClick={() => handleDeleteProduct(id)} />
                 </div>
             </div>

@@ -1,6 +1,5 @@
 'use client'
 import { userFormSchema } from "@/schemas/userFormSchema"
-import { Button } from "../ui/button"
 import { Form, FormField } from "../ui/form"
 import { Input } from "../ui/input"
 import { z } from "zod"
@@ -37,7 +36,7 @@ export const UserForm = ({ type, handleSubmit, userToEdit }: Props) => {
     if (type === "create") {
         return (
             <Form {...userForm}>
-                <form onSubmit={userForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
+                <form id="user-form" onSubmit={userForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
 
                     <FormField control={userForm.control} name="name" render={({ field }) => (
                         <>
@@ -79,16 +78,13 @@ export const UserForm = ({ type, handleSubmit, userToEdit }: Props) => {
                             )}
                         </>
                     )} />
-                    <Button className="w-full mb-4 px-4 py-2 rounded-lg shadow-md">
-                        Create
-                    </Button>
                 </form>
             </Form>
         )
     }else{
         return (
             <Form {...userForm}>
-                <form onSubmit={userForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
+                <form id="edit-user-form" onSubmit={userForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
                     <FormField control={userForm.control} name="name" render={({ field }) => (
                         <>
                             <Input
@@ -125,9 +121,6 @@ export const UserForm = ({ type, handleSubmit, userToEdit }: Props) => {
                             )}
                         </>
                     )} />
-                    <Button className="w-full mb-4 px-4 py-2 rounded-lg shadow-md">
-                        Save
-                    </Button>
                 </form>
             </Form>
         )

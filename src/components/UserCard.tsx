@@ -1,9 +1,8 @@
 import { User } from "@/types/user"
 import { Card } from "./ui/card"
-import { EditButton } from "./EditButton"
 import { DeleteButton } from "./DeleteButton"
 import { useUser } from "@/context/user"
-import Link from "next/link"
+import { EditUserDialog } from "@/containers/editUserDialog"
 
 export const UserCard = ({ user }: { user: User }) => {
     const { id, name, email, role } = user;
@@ -28,9 +27,7 @@ export const UserCard = ({ user }: { user: User }) => {
                 <span className="text-gray-500 text-sm mb-2">ID: {id}</span>
 
                 <div className="flex items-center gap-2 ">
-                    <Link href={`/edit/user/${user.id}`}>
-                        <EditButton />
-                    </Link>
+                    <EditUserDialog id={id} />
                     <DeleteButton onClick={() => handleDeleteUser(user)} />
                 </div>
             </div>
