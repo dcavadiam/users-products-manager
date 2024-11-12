@@ -1,38 +1,62 @@
 'use client'
-
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormField, FormItem } from "@/components/ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PackagePlus } from "lucide-react";
+import { useProduct } from "@/context/product";
+import { redirect, useParams } from "next/navigation";  
+import { useEffect } from "react";
+import { Product } from "@/types/product";
 
-const productFormSchema = z.object({
-    name: z.string().min(3, { message: "Name must be at least 3 characters long" }).max(50, { message: "Name cannot be longer than 50 characters" }),
-    price: z.string().min(1, { message: "Price must be greater than 0" }),
-    stock: z.string().min(1, { message: "Stock must be greater than 0" }),
-})
+export default function EditProduct() {
+    const newParams = useParams<{ id: string }>();
 
-export default function CreateProduct() {
+    const { products, setProducts } = useProduct();
 
-    const productForm = useForm<z.infer<typeof productFormSchema>>({
-        resolver: zodResolver(productFormSchema),
-        defaultValues: {
-            name: "",
-            price: "",
-            stock: "",
-        },
-    })
+    const newProduct = products.find(product => product.id === newParams.id);
 
-    function handleSubmit(data: z.infer<typeof productFormSchema>) {
-        console.log(data)
+    if (!newProduct) {
+        return <div>Product not found</div>;
     }
+
+    const productForm = useForm<Product>({
+        defaultValues: newProduct,
+    });
+
+    useEffect(() => {
+        const productToEdit = products.find(product => product.id === newParams.id);
+        if (productToEdit) {
+            productForm.setValue("name", productToEdit.name);
+            productForm.setValue("price", productToEdit.price);
+            productForm.setValue("stock", productToEdit.stock);
+        }
+    }, [newParams.id, products, productForm]);
+
+    const handleSubmit = (data: Product) => {
+        const updatedProducts = products.map((product) => {
+            if (product.id === newParams.id) {
+                return {
+                    ...product,
+                    name: data.name,
+                    price: data.price,
+                    stock: data.stock,
+                };
+            }
+            return product;
+        });
+        setProducts(updatedProducts);
+        localStorage.setItem("products", JSON.stringify(updatedProducts));
+        alert("Product updated successfully");
+        redirect("/products");
+    }
+
     return (
-        <section className="w-full flex flex-col gap-4 px-6 py-4">
+        <section className="w-full flex flex-col gap-8 px-6 py-4">
             <h1 className="text-2xl font-bold flex items-center">
-                <PackagePlus className="w-10 text-black" /> Create new product
+                <PackagePlus className="w-10 text-black" /> Edit Product
             </h1>
+
             <Form {...productForm}>
                 <form onSubmit={productForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
                     <FormField control={productForm.control} name="name" render={({ field }) => (
@@ -60,7 +84,7 @@ export default function CreateProduct() {
                         </>
                     )} />
                     <Button className="w-full mb-4 px-4 py-2 rounded-lg shadow-md">
-                        Create
+                        Save
                     </Button>
                 </form>
             </Form>

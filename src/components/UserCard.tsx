@@ -1,10 +1,19 @@
 import { User } from "@/types/user"
 import { Card } from "./ui/card"
-import { Button } from "./ui/button"
-import { Edit, Trash } from "lucide-react"
+import { EditButton } from "./EditButton"
+import { DeleteButton } from "./DeleteButton"
+import { useUser } from "@/context/user"
+import Link from "next/link"
 
 export const UserCard = ({ user }: { user: User }) => {
-    const { name, email, role } = user;
+    const { id, name, email, role } = user;
+    const { users, setUsers } = useUser();
+
+    const handleDeleteUser = (user: User) => {
+        const updatedUsers = users.filter(({id}) => id !== user.id);
+        setUsers(updatedUsers);
+        localStorage.setItem("users", JSON.stringify(updatedUsers));
+    }
     return (
         <Card className="w-full max-w-[300px] bg-white shadow-md rounded-lg">
             <div className="flex flex-col  justify-between p-4">
@@ -16,14 +25,13 @@ export const UserCard = ({ user }: { user: User }) => {
                 </div>
                 <span className="text-gray-400 text-xs mb-2 font-semibold uppercase">{role}</span>
                 <span className="text-gray-500 text-sm mb-2">{email}</span>
+                <span className="text-gray-500 text-sm mb-2">ID: {id}</span>
 
                 <div className="flex items-center gap-2 ">
-                    <Button className="bg-transparent  rounded-full hover:bg-slate-100 hover:text-blue-500 text-blue-500 w-10 h-10">
-                        <Edit className="w-8 " />
-                    </Button>
-                    <Button className="bg-transparent rounded-full hover:bg-slate-100 hover:text-red-500 text-red-500 w-10 h-10">
-                        <Trash className="w-8 " />
-                    </Button>
+                    <Link href={`/edit/user/${user.id}`}>
+                        <EditButton />
+                    </Link>
+                    <DeleteButton onClick={() => handleDeleteUser(user)} />
                 </div>
             </div>
         </Card>

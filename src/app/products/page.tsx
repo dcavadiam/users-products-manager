@@ -1,14 +1,18 @@
+'use client'
 import { Header } from "@/containers/header";
 import { ListContainer } from "@/containers/list";
 
-import  PRODUCTS from "../../mocks/products.json";
+import { useProduct } from "@/context/product";
 
 
 export default function Users() {
+
+    const { products } = useProduct();
+
     return (
         <>
             <Header icon="box" />
-            <ListContainer data={PRODUCTS} />
+            <ListContainer title="Products" data={products} />
         </>
     );
 }

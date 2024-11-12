@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { useState } from "react"
+import Link from "next/link"
 
 // Menu items.
 const items = [
@@ -36,7 +37,9 @@ export function AppSidebar() {
             <SidebarContent>
                 <SidebarGroup className="py-8 px-4">
                     <SidebarGroupLabel>
-                        <span className="font-bold text-2xl mb-5 text-black">Dashboard</span>
+                        <Link href="/" className="mb-5">
+                            <span className="font-bold text-2xl text-black">Dashboard</span>
+                        </Link>
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>

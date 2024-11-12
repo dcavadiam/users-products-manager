@@ -7,14 +7,13 @@ import { Form, FormField } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserPlus } from "lucide-react";
-
-const userFormSchema = z.object({
-    name: z.string().min(3, { message: "Name must be at least 3 characters long" }).max(50, { message: "Name cannot be longer than 50 characters" }),
-    email: z.string().email({ message: "Please enter a valid email address" }),
-    role: z.string().min(1, { message: "Role is required" }).max(50, { message: "Role cannot be longer than 50 characters" }),
-})
+import { useUser } from "@/context/user";
+import { redirect } from "next/navigation";
+import { userFormSchema } from "@/schemas/userFormSchema";
 
 export default function CreateUser() {
+
+    const { users, setUsers } = useUser();
 
     const userForm = useForm<z.infer<typeof userFormSchema>>({
         resolver: zodResolver(userFormSchema),
@@ -26,8 +25,19 @@ export default function CreateUser() {
     })
 
     function handleSubmit(data: z.infer<typeof userFormSchema>) {
-        console.log(data)
+        const newUser = {
+            id: crypto.randomUUID(),
+            name: data.name,
+            email: data.email,
+            role: data.role,
+        }
+        const updatedUsers = [...users, newUser];
+        setUsers(updatedUsers); 
+        localStorage.setItem("users", JSON.stringify(updatedUsers));
+        alert("User created successfully");
+        redirect("/users");
     }
+
 
     return (
         <section className="w-full flex flex-col gap-8 px-6 py-4">
