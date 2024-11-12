@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { UserProvider } from "@/context/user";
 import { ProductProvider } from "@/context/product";
-import { MenuIcon } from "lucide-react";
 import { CustomTrigger } from "@/components/CustomTrigger";
 
 export const metadata: Metadata = {

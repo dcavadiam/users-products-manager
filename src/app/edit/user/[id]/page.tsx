@@ -46,12 +46,7 @@ export default function EditUser() {
 
     const userToEdit = users.find(user => user.id === newParams.id);
 
-    if (!userToEdit) {
-        return <div>User not found</div>;
-    }
-
     useEffect(() => {
-        const userToEdit = users.find(user => user.id === newParams.id);
         if (userToEdit) {
             userForm.setValue("name", userToEdit.name);
             userForm.setValue("email", userToEdit.email);
@@ -59,6 +54,9 @@ export default function EditUser() {
         }
     }, [newParams.id, users, userForm]);
 
+    if (!userToEdit) {
+        return <div>User not found</div>;
+    }
     return (
         <section className="w-full flex flex-col gap-8 px-6 py-4">
             <h1 className="text-2xl font-bold flex items-center">

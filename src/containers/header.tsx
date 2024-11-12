@@ -6,7 +6,6 @@ import { useUser } from "@/context/user";
 import { Search, UserPlus, PackagePlus } from "lucide-react";
 import Link from "next/link";
 import { useRef } from "react";
-import { useDebounce } from 'use-debounce';
 import USERS from "@/mocks/users.json";
 import PRODUCTS from "@/mocks/products.json";
 

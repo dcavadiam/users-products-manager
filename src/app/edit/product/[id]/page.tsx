@@ -5,42 +5,49 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PackagePlus } from "lucide-react";
 import { useProduct } from "@/context/product";
-import { redirect, useParams } from "next/navigation";  
+import { redirect, useParams } from "next/navigation";
 import { useEffect } from "react";
 import { Product } from "@/types/product";
+import { productFormSchema } from "@/schemas/productFormSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 export default function EditProduct() {
     const newParams = useParams<{ id: string }>();
 
     const { products, setProducts } = useProduct();
 
-    const newProduct = products.find(product => product.id === newParams.id);
+    const productToEdit = products.find(product => product.id === newParams.id);
 
-    if (!newProduct) {
-        return <div>Product not found</div>;
-    }
-
-    const productForm = useForm<Product>({
-        defaultValues: newProduct,
+    const productForm = useForm<z.infer<typeof productFormSchema>>({
+        resolver: zodResolver(productFormSchema),
+        defaultValues: {
+            name: "",
+            price: "",
+            stock: "",
+        },
     });
 
     useEffect(() => {
-        const productToEdit = products.find(product => product.id === newParams.id);
         if (productToEdit) {
             productForm.setValue("name", productToEdit.name);
-            productForm.setValue("price", productToEdit.price);
-            productForm.setValue("stock", productToEdit.stock);
+            productForm.setValue("price", productToEdit.price.toString());
+            productForm.setValue("stock", productToEdit.stock.toString());
         }
     }, [newParams.id, products, productForm]);
 
-    const handleSubmit = (data: Product) => {
+    if (!productToEdit) {
+        return <div>Product not found</div>;
+    }
+
+    const handleSubmit = (data: z.infer<typeof productFormSchema>) => {
         const updatedProducts = products.map((product) => {
             if (product.id === newParams.id) {
                 return {
                     ...product,
                     name: data.name,
-                    price: data.price,
-                    stock: data.stock,
+                    price: Number(data.price),
+                    stock: Number(data.stock),
                 };
             }
             return product;
