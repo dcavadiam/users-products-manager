@@ -7,7 +7,6 @@ import { PackagePlus } from "lucide-react";
 import { useProduct } from "@/context/product";
 import { redirect, useParams } from "next/navigation";
 import { useEffect } from "react";
-import { Product } from "@/types/product";
 import { productFormSchema } from "@/schemas/productFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
