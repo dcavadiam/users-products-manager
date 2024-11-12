@@ -8,6 +8,7 @@ import { EditProductDialog } from "@/containers/editProductDialog";
 import { ConfirmDialog } from "@/containers/confirmDialog";
 
 import { Product } from "@/types/product";
+import { Barcode } from "lucide-react";
 
 export const ProductCard = ({ product }: { product: Product }) => {
     const { id, name, price, stock } = product;
@@ -37,8 +38,9 @@ export const ProductCard = ({ product }: { product: Product }) => {
                         stock === 0 ? <span className="bg-red-200 bg-opacity-55 px-2 rounded-sm text-red-800 font-semibold text-sm">Not available</span> : <span className="bg-green-200 bg-opacity-55 px-2 rounded-sm text-green-800 font-semibold text-sm">Available</span>
                     }
                 </div>
-                <span className="text-3xl font-semibold ">${price}</span>
-                <span className="text-sm text-gray-500 mb-2">Stock: {stock}</span>
+                <span className="text-3xl font-semibold mb-1">${price}</span>
+                <span className="text-sm text-gray-500">Stock: {stock}</span>
+                <span className="text-gray-500 text-xs mb-2 flex items-center gap-1"><Barcode className="w-5 h-5" /> {id}</span>
                 <div className="flex items-center gap-2 ">
                     {/* Display the edit and delete buttons */}
                     <EditProductDialog id={id} />

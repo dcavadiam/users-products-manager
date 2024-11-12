@@ -54,7 +54,7 @@ export const ProductForm = ({ type, handleSubmit, productToEdit }: Props) => {
                     )} />
                     <FormField control={productForm.control} name="price" render={({ field }) => (
                         <>
-                            <Input {...field} type="text" className={`bg-white w-full px-4 py-2 rounded-lg shadow-md text-gray-500 ${productForm.formState.errors.price ? 'border-red-500' : ''}`} placeholder="Price" />
+                            <Input {...field} type="number" min={1} className={`bg-white w-full px-4 py-2 rounded-lg shadow-md text-gray-500 ${productForm.formState.errors.price ? 'border-red-500' : ''}`} placeholder="Price" />
                             {productForm.formState.errors.price && (
                                 <span className="text-sm text-red-500 ">{productForm.formState.errors.price.message}</span>
                             )}
@@ -86,7 +86,7 @@ export const ProductForm = ({ type, handleSubmit, productToEdit }: Props) => {
                     )} />
                     <FormField control={productForm.control} name="price" render={({ field }) => (
                         <>
-                            <Input {...field} type="text" className={`bg-white w-full px-4 py-2 rounded-lg shadow-md text-gray-500 ${productForm.formState.errors.price ? 'border-red-500' : ''}`} placeholder="Price" />
+                            <Input {...field} type="number" min={1} className={`bg-white w-full px-4 py-2 rounded-lg shadow-md text-gray-500 ${productForm.formState.errors.price ? 'border-red-500' : ''}`} placeholder="Price" />
                             {productForm.formState.errors.price && (
                                 <span className="text-sm text-red-500 ">{productForm.formState.errors.price.message}</span>
                             )}

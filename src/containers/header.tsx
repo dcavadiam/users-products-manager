@@ -43,9 +43,9 @@ export function Header({ icon }: { icon: string }) {
 
     return (
         <header className="w-full flex items-center justify-between gap-4 bg-white py-4 px-6">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 w-full max-w-[400px]">
                 <Search className="w-5 text-gray-400" />
-                <Input placeholder="Search..." className="w-full max-w-[400px]" ref={inputRef} type="text" onChange={handleSearch} />
+                <Input placeholder="Search..." ref={inputRef} type="text" onChange={handleSearch} />
             </div>
             <div>
                 {
