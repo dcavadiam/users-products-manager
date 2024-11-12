@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, UserPlus, PackagePlus } from "lucide-react";
+import Link from "next/link";
 
 export function Header({ icon }: { icon: string }) {
     return (
@@ -10,11 +11,19 @@ export function Header({ icon }: { icon: string }) {
                 <Input placeholder="Search..." className="w-full max-w-[300px]" type="text" />
             </div>
             <div>
-                <Button className="bg-blue-500 text-white">
-                    {
-                        icon === "user" ? <UserPlus className="w-5 text-white" /> : <PackagePlus className="w-5 text-white" />
-                    }
-                </Button>
+                {
+                    icon === "user" 
+                    ? <Link href="/create-user">
+                        <Button className="bg-blue-500 text-white">
+                            <UserPlus className="w-5 text-white" />
+                        </Button>
+                    </Link> 
+                    : <Link href="/create-product">
+                        <Button className="bg-blue-500 text-white">
+                            <PackagePlus className="w-5 text-white" />
+                        </Button>
+                    </Link>
+                }
             </div>
         </header>
     )
