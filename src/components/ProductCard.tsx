@@ -1,21 +1,30 @@
 'use client';
 
-import { DeleteButton } from "./DeleteButton";
 import { Card } from "./ui/card"
 
 import { Product } from "@/types/product";
 import { useProduct } from "@/context/product";
 import { EditProductDialog } from "@/containers/editProductDialog";
+import { useEffect, useState } from "react";
+import { ConfirmDialog } from "@/containers/confirmDialog";
 
 export const ProductCard = ({ product }: { product: Product }) => {
     const { id, name, price, stock } = product;
     const { products, setProducts } = useProduct();
+
+    // State to ensure the component is only rendered on the client
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true); // Ensure the component is only rendered on the client
+    }, []);
 
     const handleDeleteProduct = (productId: string) => {
         const updatedProducts = products.filter(({ id }) => id !== productId);
         setProducts(updatedProducts);
         localStorage.setItem("products", JSON.stringify(updatedProducts));
     }
+    if (!isClient) return null; // Only render the component on the client
 
     return (
         <Card className="w-full max-w-[300px] bg-white shadow-md rounded-lg">
@@ -30,7 +39,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
                 <span className="text-sm text-gray-500 mb-2">Stock: {stock}</span>
                 <div className="flex items-center gap-2 ">
                     <EditProductDialog id={id} />
-                    <DeleteButton onClick={() => handleDeleteProduct(id)} />
+                    <ConfirmDialog handleDelete={() => handleDeleteProduct(id)} />
                 </div>
             </div>
         </Card>

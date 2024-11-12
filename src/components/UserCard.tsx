@@ -1,12 +1,20 @@
 import { User } from "@/types/user"
 import { Card } from "./ui/card"
-import { DeleteButton } from "./DeleteButton"
 import { useUser } from "@/context/user"
 import { EditUserDialog } from "@/containers/editUserDialog"
+import { useEffect, useState } from "react"
+import { ConfirmDialog } from "@/containers/confirmDialog"
 
 export const UserCard = ({ user }: { user: User }) => {
     const { id, name, email, role } = user;
     const { users, setUsers } = useUser();
+
+    // State to ensure the component is only rendered on the client
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true); // Ensure the component is only rendered on the client
+    }, []);
 
 
     const handleDeleteUser = (user: User) => {
@@ -15,6 +23,8 @@ export const UserCard = ({ user }: { user: User }) => {
         localStorage.setItem("users", JSON.stringify(updatedUsers));
     }
 
+    if (!isClient) return null; // Only render the component on the client
+    
     return (
         <Card className="w-full max-w-[300px] bg-white shadow-md rounded-lg">
             <div className="flex flex-col  justify-between p-4">
@@ -30,7 +40,7 @@ export const UserCard = ({ user }: { user: User }) => {
 
                 <div className="flex items-center gap-2 ">
                     <EditUserDialog id={id} />
-                    <DeleteButton onClick={() => handleDeleteUser(user)} />
+                    <ConfirmDialog handleDelete={() => handleDeleteUser(user)} />
                 </div>
             </div>
         </Card>
