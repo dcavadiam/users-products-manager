@@ -46,13 +46,13 @@ git clone https://github.com/dcavadiam/users-products-manager.git
 2. Instalar las dependencias:
 
 ```
-npm install
+pnpm install
 ```
 
 3. Iniciar el servidor de desarrollo:
 
 ```
-npm run dev
+pnpm dev
 ```
 
 4. Abrir el navegador y acceder a http://localhost:3000
