@@ -7,12 +7,16 @@ import { useProduct } from "@/context/product";
 
 export default function Users() {
 
-    const { products } = useProduct();
+    const { products, searchProducts, searchedProducts } = useProduct();
 
     return (
         <>
             <Header icon="box" />
-            <ListContainer title="Products" data={products} />
+            {
+                searchProducts !== ""
+                    ? <ListContainer title="Products" data={searchedProducts} />
+                    : <ListContainer title="Products" data={products} />
+            }
         </>
     );
 }

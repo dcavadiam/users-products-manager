@@ -5,13 +5,17 @@ import { useUser } from "@/context/user";
 
 export default function Users() {
 
-    const { users } = useUser();
+    const { users, searchUser: search, searchedUsers } = useUser();
 
     return (
         <>
             <Header icon="user" />
-            <ListContainer title="Users" data={users} />
-            
+            {
+                search !== ""
+                    ? <ListContainer title="Users" data={searchedUsers} />
+                    : <ListContainer title="Users" data={users} />
+            }
+
         </>
     );
 }
