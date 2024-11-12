@@ -10,12 +10,12 @@ import { CreateUserDialog } from "./createUserDialog";
 import { CreateProductDialog } from "./createProductDialog";
 
 export function Header({ icon }: { icon: string }) {
-
     const { products, setProducts, setSearchProducts, setSearchedProducts } = useProduct();
     const { users, setUsers, setSearchUser, setSearchedUsers } = useUser();
-
     const inputRef = useRef<HTMLInputElement>(null);
 
+    // Function to handle search: 
+    // if the icon is "user", search for users, else search for products
     const handleSearch = () => {
         const term = inputRef.current?.value.trim().toLowerCase();
         if (icon === "user") {
@@ -49,6 +49,7 @@ export function Header({ icon }: { icon: string }) {
             </div>
             <div>
                 {
+                    // Display the appropriate dialog based on the icon
                     icon === "user"
                         ? <CreateUserDialog />
                         : <CreateProductDialog />

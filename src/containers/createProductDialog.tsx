@@ -1,5 +1,8 @@
+'use client'
+
 import { z } from "zod"
 import { useState } from "react"
+import { useProduct } from "@/context/product"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -11,18 +14,18 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { PackagePlus } from "lucide-react"
-import { useProduct } from "@/context/product"
-import { Product } from "@/types/product"
-import { productFormSchema } from "@/schemas/productFormSchema"
 import { ProductForm } from "@/components/forms/ProductForm"
+import { PackagePlus } from "lucide-react"
+
+import { productFormSchema } from "@/schemas/productFormSchema"
+
+import { Product } from "@/types/product"
 
 export const CreateProductDialog = () => {
-
     const [open, setOpen] = useState<boolean>(false);
-
     const { products, setProducts } = useProduct();
 
+    // Function to handle creating a new product
     function handleSubmit(data: z.infer<typeof productFormSchema>) {
         const newProduct: Product = {
             id: crypto.randomUUID(),
@@ -35,7 +38,6 @@ export const CreateProductDialog = () => {
         localStorage.setItem("products", JSON.stringify(updatedProducts));
         alert("Product created successfully");
         setOpen(false);
-
     }
 
     return (
@@ -44,7 +46,6 @@ export const CreateProductDialog = () => {
                 <Button className="bg-blue-500 text-white">
                     <PackagePlus className="w-5 text-white" />
                 </Button>
-
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>

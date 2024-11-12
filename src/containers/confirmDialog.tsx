@@ -1,3 +1,6 @@
+'use client';
+import { useState } from "react";
+
 import { DeleteButton } from "@/components/DeleteButton";
 import { Button } from "@/components/ui/button"
 import {
@@ -9,17 +12,16 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { useState } from "react";
 
 interface Props {
     handleDelete: () => void;
 }
 
+// Confirm dialog component for deleting a user or product
 export const ConfirmDialog = ({ handleDelete }: Props) => {
 
     const [open, setOpen] = useState<boolean>(false);
     console.log(open);
-
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>

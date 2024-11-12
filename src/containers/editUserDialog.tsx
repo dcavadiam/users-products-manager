@@ -1,7 +1,9 @@
+'use client';
+
 import { z } from "zod"
 import { useState } from "react"
+import { useUser } from "@/context/user"
 
-import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
@@ -11,16 +13,18 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { useUser } from "@/context/user"
-import { userFormSchema } from "@/schemas/userFormSchema"
+import { Button } from "@/components/ui/button"
 import { UserForm } from "@/components/forms/UserForm"
 import { EditButton } from "@/components/EditButton"
+
+import { userFormSchema } from "@/schemas/userFormSchema"
 
 export const EditUserDialog = ({id}: {id: string}) => {
 
     const [open, setOpen] = useState<boolean>(false);
     const { users, setUsers } = useUser();
 
+    // Function to handle updating a user
     function handleSubmit(data: z.infer<typeof userFormSchema>) {
         const updatedUsers = users.map((user) => {
             if (user.id === id) {
@@ -38,7 +42,8 @@ export const EditUserDialog = ({id}: {id: string}) => {
         alert("User updated successfully");
         setOpen(false);
     }
-
+    
+    // Get the user to edit from the users array
     const userToEdit = users.find(user => user.id === id);
 
     return (

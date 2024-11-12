@@ -12,6 +12,7 @@ interface ProductContextProps {
     setSearchProducts: (search: string) => void;
 }
 
+// Create a product context
 export const ProductContext = createContext<ProductContextProps>({
     products: [],
     setProducts: () => { },
@@ -21,6 +22,7 @@ export const ProductContext = createContext<ProductContextProps>({
     setSearchProducts: () => { }
 });
 
+// Product provider component
 export function ProductProvider({ children }: { children: React.ReactNode }) {
     const ISSERVER = typeof window === "undefined"; // Check if the code is running on the server
     const [products, setProducts] = useState<Product[]>(ISSERVER ? PRODUCTS : localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products") as string) : PRODUCTS);
@@ -34,6 +36,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
     );
 }
 
+// Hook to access the product context
 export function useProduct() {
     const context = useContext(ProductContext);
     if (!context) {

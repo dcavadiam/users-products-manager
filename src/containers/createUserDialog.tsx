@@ -1,6 +1,9 @@
+'use client';
+
 import { z } from "zod"
 import { useState } from "react"
 import { useUser } from "@/context/user"
+
 import { userFormSchema } from "@/schemas/userFormSchema"
 
 import { UserForm } from "@/components/forms/UserForm"
@@ -17,11 +20,10 @@ import {
 import { UserPlus } from "lucide-react"
 
 export const CreateUserDialog = () => {
-
     const { users, setUsers } = useUser();
-
     const [open, setOpen] = useState<boolean>(false);
 
+    // Function to handle creating a new user
     function handleSubmit(data: z.infer<typeof userFormSchema>) {
         const newUser = {
             id: crypto.randomUUID(),
@@ -36,14 +38,12 @@ export const CreateUserDialog = () => {
         setOpen(false);
     }
 
-
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button className="bg-blue-500 text-white">
                     <UserPlus className="w-5 text-white" />
                 </Button>
-
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>

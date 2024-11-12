@@ -1,7 +1,9 @@
+'use client'
+
 import { z } from "zod"
 import { useState } from "react"
+import { useProduct } from "@/context/product"
 
-import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
@@ -12,16 +14,17 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { EditButton } from "@/components/EditButton"
-import { useProduct } from "@/context/product"
-import { productFormSchema } from "@/schemas/productFormSchema"
+import { Button } from "@/components/ui/button"
 import { ProductForm } from "@/components/forms/ProductForm"
+
+import { productFormSchema } from "@/schemas/productFormSchema"
 
 export const EditProductDialog = ({ id }: { id: string }) => {
 
     const [open, setOpen] = useState<boolean>(false);
     const { products, setProducts } = useProduct();
 
-
+    // Function to handle updating a product
     const handleSubmit = (data: z.infer<typeof productFormSchema>) => {
         const updatedProducts = products.map((product) => {
             if (product.id === id) {
@@ -40,6 +43,7 @@ export const EditProductDialog = ({ id }: { id: string }) => {
         setOpen(false);
     }
 
+    // Get the product to edit from the products array
     const productToEdit = products.find(product => product.id === id);
 
 return (
@@ -49,9 +53,9 @@ return (
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Edit user</DialogTitle>
+                <DialogTitle>Edit product</DialogTitle>
                 <DialogDescription>
-                    Edit user details here. Click save when youre done.
+                    Edit product details here. Click save when youre done.
                 </DialogDescription>
             </DialogHeader>
             {/* Form */}

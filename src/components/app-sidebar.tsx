@@ -1,4 +1,8 @@
 'use client'
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
 import { User, Package } from "lucide-react"
 import {
     Sidebar,
@@ -10,9 +14,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 // Menu items.
 const items = [
@@ -29,9 +30,8 @@ const items = [
 ]
 
 export function AppSidebar() {
-
+    // Render the isActive prop on the links based on the current pathname
     const pathname = usePathname()
-    
     return (
         <Sidebar>
             <SidebarContent>

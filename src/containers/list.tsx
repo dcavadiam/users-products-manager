@@ -10,10 +10,12 @@ interface ListContainerProps {
     data: DataProps[];
 }
 
+// Function to check if the data is a user or a product 
 function isUser(data: DataProps): data is User {
     return (data as User).email !== undefined && (data as User).id !== undefined;
 }
 
+// Function to check if the data is a product
 function isProduct(data: DataProps): data is Product {
     return (data as Product).price !== undefined && (data as Product).id !== undefined;
 }
@@ -25,6 +27,7 @@ export function ListContainer({ title, data }: ListContainerProps) {
             <h1 className="text-2xl font-bold">{title}</h1>
             <div className="w-full flex gap-4 flex-wrap max-md:justify-center">
                 {
+                    // Render the user or product cards based on the data type
                     data.map((item) => (
                         isUser(item) ? (
                             <UserCard key={item.id} user={item as User} />      
@@ -32,9 +35,7 @@ export function ListContainer({ title, data }: ListContainerProps) {
                             <ProductCard key={item.id} product={item as Product} />
                         ) : null
                     ))
-
                 }
-
             </div>
         </section>
     )

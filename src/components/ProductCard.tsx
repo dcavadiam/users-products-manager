@@ -1,12 +1,13 @@
 'use client';
 
+import { useEffect, useState } from "react";
+import { useProduct } from "@/context/product";
+
 import { Card } from "./ui/card"
+import { EditProductDialog } from "@/containers/editProductDialog";
+import { ConfirmDialog } from "@/containers/confirmDialog";
 
 import { Product } from "@/types/product";
-import { useProduct } from "@/context/product";
-import { EditProductDialog } from "@/containers/editProductDialog";
-import { useEffect, useState } from "react";
-import { ConfirmDialog } from "@/containers/confirmDialog";
 
 export const ProductCard = ({ product }: { product: Product }) => {
     const { id, name, price, stock } = product;
@@ -32,12 +33,14 @@ export const ProductCard = ({ product }: { product: Product }) => {
                 <div className="flex items-center justify-between max-sm:flex-col-reverse max-sm:items-start sm:gap-2 mb-2">
                     <span className="text-lg font-semibold">{name}</span>
                     {
+                        // Display a red or green badge based on the stock status
                         stock === 0 ? <span className="bg-red-200 bg-opacity-55 px-2 rounded-sm text-red-800 font-semibold text-sm">Not available</span> : <span className="bg-green-200 bg-opacity-55 px-2 rounded-sm text-green-800 font-semibold text-sm">Available</span>
                     }
                 </div>
                 <span className="text-3xl font-semibold ">${price}</span>
                 <span className="text-sm text-gray-500 mb-2">Stock: {stock}</span>
                 <div className="flex items-center gap-2 ">
+                    {/* Display the edit and delete buttons */}
                     <EditProductDialog id={id} />
                     <ConfirmDialog handleDelete={() => handleDeleteProduct(id)} />
                 </div>

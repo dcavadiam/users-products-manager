@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Users Products Manager",
+  title: {
+    template: "%s | Users Products Manager",
+    default: "Users Products Manager",
+  },
   description: "Manage users and products with Next.js",
 };
-
 
 export default function RootLayout({
   children,

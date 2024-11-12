@@ -1,11 +1,14 @@
 'use client'
-import { userFormSchema } from "@/schemas/userFormSchema"
-import { Form, FormField } from "../ui/form"
-import { Input } from "../ui/input"
+import { useEffect } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect } from "react"
+
+import { userFormSchema } from "@/schemas/userFormSchema"
+
+import { Form, FormField } from "../ui/form"
+import { Input } from "../ui/input"
+
 import { User } from "@/types/user"
 
 interface Props {
@@ -16,6 +19,7 @@ interface Props {
 
 export const UserForm = ({ type, handleSubmit, userToEdit }: Props) => {
     
+    // Create a form instance using the userFormSchema
     const userForm = useForm<z.infer<typeof userFormSchema>>({
         resolver: zodResolver(userFormSchema),
         defaultValues: {
@@ -25,6 +29,7 @@ export const UserForm = ({ type, handleSubmit, userToEdit }: Props) => {
         },
     });
 
+    // Set the initial values of the form based on the userToEdit prop
     useEffect(() => {
         if (userToEdit) {
             userForm.setValue("name", userToEdit.name);
@@ -33,11 +38,11 @@ export const UserForm = ({ type, handleSubmit, userToEdit }: Props) => {
         }
     }, [userToEdit, userForm]);
 
+    // Render the form based on the type (create or edit)
     if (type === "create") {
         return (
             <Form {...userForm}>
                 <form id="user-form" onSubmit={userForm.handleSubmit(handleSubmit)} className="w-full max-w-[500px] flex flex-col gap-4">
-
                     <FormField control={userForm.control} name="name" render={({ field }) => (
                         <>
                             <Input
@@ -50,8 +55,6 @@ export const UserForm = ({ type, handleSubmit, userToEdit }: Props) => {
                             )}
                         </>
                     )} />
-
-
                     <FormField control={userForm.control} name="email" render={({ field }) => (
                         <>
                             <Input
@@ -64,8 +67,6 @@ export const UserForm = ({ type, handleSubmit, userToEdit }: Props) => {
                             )}
                         </>
                     )} />
-
-
                     <FormField control={userForm.control} name="role" render={({ field }) => (
                         <>
                             <Input

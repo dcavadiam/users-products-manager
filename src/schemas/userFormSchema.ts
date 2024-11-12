@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// Define the user form schema
 export const userFormSchema = z.object({
   name: z
     .string()

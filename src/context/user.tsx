@@ -13,6 +13,7 @@ interface UserContextProps {
     setSearchUser: (search: string) => void;
 }
 
+// Create a user context
 export const UserContext = createContext<UserContextProps>({
     users: [],
     setUsers: () => { },
@@ -22,6 +23,7 @@ export const UserContext = createContext<UserContextProps>({
     setSearchUser: () => { }
 });
 
+// User provider component
 export function UserProvider({ children }: { children: React.ReactNode }) {
     const ISSERVER = typeof window === "undefined"; // Check if the code is running on the server
     const [users, setUsers] = useState<User[]>(ISSERVER ? USERS : localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users") as string) : USERS);
@@ -35,6 +37,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     );
 }
 
+// Hook to access the user context
 export function useUser() {
     const context = useContext(UserContext);
     if (!context) {
